@@ -145,7 +145,7 @@ class Tmars(object):
                                         selected_idx = random.choice(available_indices)
                                         pools.append(strip[selected_idx])
                                         selected_index.append(selected_idx)
-                                    img_tuple = tuple([img_paths[p] for p in pools])
+                                    img_tuple = tuple([os.path.join(self.root, img_paths[p].split('datasets/')[1]) for p in pools])
                                     data_list.append((img_tuple,person_id,cam_id,captions_detail))
                                     pools = []
 
@@ -156,20 +156,27 @@ class Tmars(object):
                                     available_indices = [idx for idx in pool if idx not in selected_index]
                                     selected_idx = available_indices[0]
                                     pools.append(strip[selected_idx])
-                                img_tuple = tuple([img_paths[p] for p in pools])
+                                img_tuple = tuple([os.path.join(self.root, img_paths[p].split('datasets/')[1]) for p in pools])
                                 # print('img_tuple',img_tuple)
                                 data_list.append((img_tuple,person_id,cam_id,captions_detail))
 
                             elif sampler == 'dense':
                                 dense_sequences = []
+
                                 if length <= 80:
                                     for start in range(0, length, self.seq_len):
+                                        new_paths = []
                                         end = min(start + self.seq_len, length)
                                         segment = img_paths[start:end]
+
+                                        for path in segment:
+                                            path_parts = path.split('datasets')
+                                            new_path = os.path.join(self.root, path_parts[1].lstrip('/'))
+                                            new_paths.append(new_path)
                                         # 如果最后一段不足self.seq_len长度，用最后一帧填充
-                                        if len(segment) < self.seq_len:
-                                            segment += [img_paths[-1]] * (self.seq_len - len(segment))
-                                        dense_sequences.append(segment)
+                                        if len(new_paths) < self.seq_len:
+                                            new_paths += [img_paths[-1]] * (self.seq_len - len(segment))
+                                        dense_sequences.append(new_paths)
                                     data_list.append((dense_sequences, person_id, cam_id, captions_detail))
                                 else:
                                     dense_sequences = []
@@ -178,14 +185,18 @@ class Tmars(object):
 
                                     # 进行二次抽样
                                     for i in range(0, total_segments, scale):
+                                        new_paths = []
                                         start = i * self.seq_len
                                         end = min(start + self.seq_len, length)
                                         segment = img_paths[start:end]
-
+                                        for path in segment:
+                                            path_parts = path.split('datasets')
+                                            new_path = os.path.join(self.root, path_parts[1].lstrip('/'))
+                                            new_paths.append(new_path)
                                         # 如果最后一段不足self.seq_len长度，用最后一帧填充
-                                        if len(segment) < self.seq_len:
-                                            segment += [img_paths[-1]] * (self.seq_len - len(segment))
-                                        dense_sequences.append(segment)
+                                        if len(new_paths) < self.seq_len:
+                                            new_paths += [img_paths[-1]] * (self.seq_len - len(segment))
+                                        dense_sequences.append(new_paths)
                                     data_list.append((dense_sequences, person_id, cam_id, captions_detail))
 
             except json.JSONDecodeError as e:
