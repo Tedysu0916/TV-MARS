@@ -23,7 +23,7 @@ easydict
 ```
 
 ### Prepare Datasets
-Download the MARS dataset from [here](https://zheng-lab-anu.github.io/Project/project_mars.html), and our annotation files from [here](链接: https://pan.baidu.com/s/1co7U-sKj823PXQmrB42_iQ?pwd=qwer 提取码: qwer)
+Download the MARS dataset from [here](https://zheng-lab-anu.github.io/Project/project_mars.html), and our annotation files from [here](https://pan.baidu.com/s/1co7U-sKj823PXQmrB42_iQ?pwd=qwer 提取码: qwer)
 
 Organize them in `your dataset root dir` folder as follows:
 ```
