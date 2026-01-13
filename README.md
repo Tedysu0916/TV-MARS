@@ -23,7 +23,7 @@ easydict
 ```
 
 ### Prepare Datasets
-Download the MARS dataset from [here](https://zheng-lab-anu.github.io/Project/project_mars.html). To access our annotation files, please complete the TV-MARS agreement[here](./TV-MARS_Agreement.pdf). and contact us at the email below. We will provide the annotation files upon verification of your agreement.
+Download the MARS dataset from [here](https://zheng-lab-anu.github.io/Project/project_mars.html). To access our annotation files, please complete the TV-MARS agreement [here](https://github.com/Tedysu0916/TV-MARS/raw/main/TV-MARS%20Agreement.pdf) and contact us at the email below. We will provide the annotation files upon verification of your agreement.
 
 Organize them in `your dataset root dir` folder as follows:
 ```
